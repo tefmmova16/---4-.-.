@@ -1,28 +1,29 @@
-"""
-# Игра "Угадай число"
----
-Чтобы запустить игру в GitHub Codespace:
-1. Откройте терминал (Terminal) в левом нижнем углу.
-2. Наберите команду: `python main.py`
-3. Играйте и наслаждайтесь процессом!
-"""
 import random
 
-secret_number = random.randint(1, 100)
-guesses = []
+def play_game():
+    number_to_guess = random.randint(1, 100)  # Генерируем случайное число от 1 до 100
+    max_attempts = 10  # Ограничиваем количество попыток
+    attempt_count = 0
 
-while True:
-    guess = input("Угадай число от 1 до 100: ")
-    try:
-        guess = int(guess)
-        guesses.append(guess)
-    
-        if guess == secret_number:
-            print(f"Победа! Ты угадал число {secret_number} за {len(guesses)} попыток.")
-            break
-        elif guess < secret_number:
-            print("Загаданное число больше твоего.")
+    print("Привет! Я загадал число от 1 до 100. Попробуй его угадать.")
+
+    while attempt_count < max_attempts:
+        attempt_count += 1
+        try:
+            guess = int(input(f"Попытка {attempt_count}: Введите число: "))
+        except ValueError:
+            print("Неверный ввод. Введите целое число.")
+            continue
+
+        if guess < number_to_guess:
+            print("Ваше число меньше загаданного.")
+        elif guess > number_to_guess:
+            print("Ваше число больше загаданного.")
         else:
-            print("Загаданное число меньше твоего.")
-    except ValueError:
-        print("Ошибка ввода. Нужно ввести число.")
+            print(f"Правильно! Вы угадали число {number_to_guess} за {attempt_count} попыток.")
+            return
+
+    print(f"\nК сожалению, вы использовали все {max_attempts} попыток.\nПравильное число было: {number_to_guess}")
+
+if __name__ == "__main__":
+    play_game()
